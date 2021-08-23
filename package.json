@@ -1,0 +1,25 @@
+{
+  "name": "prueba",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "add": "^2.0.6",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-handlebars": "^5.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.6.3",
+    "pg": "^8.7.1",
+    "yarn": "^1.22.11"
+  },
+  "devDependencies": {},
+  "description": ""
+}

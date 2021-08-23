@@ -1,0 +1,43 @@
+<h1>Skate Park</h1>
+
+<div class="py-4">
+  <h2>Lista de participantes</h2>
+
+  <hr />
+
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Foto</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Años de experiencia</th>
+        <th scope="col">Especialidad</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody id="skatersTabla">
+    </tbody>
+  </table>
+  <a href="/login">Iniciar Sesión</a>
+  |
+  <a href="/registro">Registrarme</a>
+</div>
+<script>
+const rellenarTabla = async () => {
+  const skaters  = await axios("/skaters");
+      skaters.data.forEach((skater, index) => {
+       $("#skatersTabla").append(`
+    <tr>
+        <th scope="row">${index+1}</th>
+        <td><img src="imagenes/${skater.foto}" alt=""/></td>
+        <td>${skater.nombre}</td>
+        <td>${skater.anos_de_experiencia}</td>
+        <td>${skater.especialidad}</td>
+        ${skater.estado ? '<td class="text-success font-weight-bold"> Aprobado </td>': '<td class="text-warning font-weight-bold"> En Revision </td>'} 
+      </tr>
+  `);
+  });
+};
+rellenarTabla()
+</script>

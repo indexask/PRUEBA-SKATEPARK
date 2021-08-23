@@ -1,0 +1,82 @@
+<h1>Skate Park</h1>
+
+<div class="py-4">
+  <h2>Administración</h2>
+  <hr class="w-50" />
+
+  <table class="table w-50 m-auto">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Foto</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Años de experiencia</th>
+        <th scope="col">Especialidad</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody id = "skatersTabla">
+      
+    </tbody>
+  </table>
+</div>
+
+
+<script>
+
+
+  const rellenarTabla = async () => {
+  const skaters  = await axios("/skaters");
+  console.log(skaters)
+  skaters.data.forEach((skater, index) => {
+  $("#skatersTabla").append(`
+    <tr>
+        <th scope="row">${index+1}</th>
+        <td><img src="imagenes/${skater.foto}" alt=""/></td>
+        <td>${skater.nombre}</td>
+        <td>${skater.anos_de_experiencia}</td>
+        <td>${skater.especialidad}</td>
+        ${!skater.estado ? '<td><input type="checkbox" data-check ='+skater.id+' /></td>' : '<td><input type="checkbox" checked data-check ='+skater.id+'/></td>'}
+      </tr>
+  `);
+  });
+};
+(async()=>{
+await rellenarTabla();
+const checkboxs = document.querySelectorAll("[data-check]")
+checkboxs.forEach((checkbox)=>{
+$(checkbox).change(async(e)=>{
+const id = e.target.dataset.check
+if(e.target.checked){
+  await axios.put(`/skaterEstado/${id}`,{
+    estado : true
+  });
+}else{
+  await axios.put(`/skaterEstado/${id}`,{
+    estado : false
+  });
+}
+})
+});
+})()
+
+
+
+
+/*const changeStatus = async (id, e) => {
+  const estado = e.checked
+  try {
+  await axios.put("/skaters",{
+    id,
+    estado
+  });
+  alert(estado ? "Usuario habilitado para skater park" : "Usuario deshabilitado para skatepark")
+}
+catch ({ response }) {
+  const { data } = response
+  const { error } = data
+  alert(error)
+}
+*/
+
+</script>

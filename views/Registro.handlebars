@@ -1,0 +1,74 @@
+<body>
+    <h1>Skate Park</h1>
+
+    <div class="py-4">
+      <h2>Registro</h2>
+      <hr class="w-50" />
+
+      <form id="formulario">
+        <div class="form-group row w-50 m-auto">
+          <div class="form-group col-12 col-sm-6">
+            <label>Email</label >
+            <input class="form-control m-auto" id="email" name="email"/>
+          </div>
+          <div class="form-group col-12 col-sm-6">
+            <label>Nombre</label >
+            <input class="form-control m-auto" id="nombre" name="nombre"/>
+          </div>
+          <div class="form-group col-12 col-sm-6">
+            <label>Password</label >
+            <input class="form-control m-auto"  id="password" name="password" type="password" />
+          </div>
+          <div class="form-group col-12 col-sm-6">
+            <label>Repita la password</label>
+            <input class="form-control m-auto" type="password" />
+          </div>
+          <div class="form-group col-12 col-sm-6" >
+            <label>Años de experiencia</label >
+            <input class="form-control m-auto"  id="anos_de_experiencia" name="anos_de_experiencia"/>
+          </div>
+          <div class="form-group col-12 col-sm-6" >
+            <label>Especialidad</label >
+            <input class="form-control m-auto" id="especialidad" name="especialidad"/>
+          </div>
+          <div class="form-group col-12 col-sm-12">
+            <label>Foto de perfil</label>
+            <input type="file" id="foto"  name="foto"/>
+          </div>
+        </div>
+        <button class="btn btn-info mb-3" id="registerButton">Registrarme</button>
+        <p><a href="/login"> Iniciar sesión</a></p>
+      </form>
+    </div>
+
+    <script>
+        $('button').click(async () =>{
+          const email = $('#email').val()
+          const nombre = $('#nombre').val()
+          const password = $('#password').val()
+          const anos_de_experiencia = $('#anos_de_experiencia').val()
+          const especialidad = $('#especialidad').val()
+          const foto = $('#foto').prop("files")[0]
+
+          const payload = new FormData()
+          payload.append("email", email)
+          payload.append("nombre", nombre)
+          payload.append("password", password)
+          payload.append("anos_de_experiencia", anos_de_experiencia)
+          payload.append("especialidad", especialidad)
+          payload.append("foto", foto)
+        
+
+          try {
+            await axios.post('/skaters',payload, {headers: {"Content-Type": "multipart/form-data"}})
+            alert("Skater registrado con exito")
+
+            window.location.href = "/Login"
+
+          }catch ({ response }) {
+            const { data } = response
+            const { error } = data
+            alert(error)
+          } 
+        }); 
+    </script>
